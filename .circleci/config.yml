@@ -10,6 +10,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "client/package.json" }}
       - run: cd client && npm install
+      - run: ls client
       - save_cache:
           paths:
             - "client/node_modules"
@@ -23,6 +24,7 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "client/package.json" }}
+      - run: ls client
       - run: cd client && npm run-script build
       - save_cache:
           paths:
