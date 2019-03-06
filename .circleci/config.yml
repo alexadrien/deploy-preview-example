@@ -12,7 +12,7 @@ jobs:
       - run: cd client && npm install
       - save_cache:
           paths:
-            - client/node_modules
+            - "client/node_modules"
           key: v1-dependencies-{{ checksum "client/package.json" }}
   build:
     docker:
