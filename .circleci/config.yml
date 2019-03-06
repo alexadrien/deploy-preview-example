@@ -28,7 +28,7 @@ jobs:
       - run: cd client && npm run-script build
       - save_cache:
           paths:
-            - build
+            - client/build
           key: v1-build-{{ .Environment.CIRCLE_SHA1 }}
   deploy:
     docker:
