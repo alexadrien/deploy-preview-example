@@ -9,8 +9,7 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "client/package.json" }}
-      - run: cd client
-      - run: npm install
+      - run: cd client && npm install
       - save_cache:
           paths:
             - client/node_modules
@@ -24,8 +23,7 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "client/package.json" }}
-      - run: cd client
-      - run: npm run-script build
+      - run: cd client && npm run-script build
       - save_cache:
           paths:
             - build
@@ -39,8 +37,7 @@ jobs:
       - restore_cache:
           keys:
             - v1-build-{{ .Environment.CIRCLE_SHA1 }}
-      - run: cd client
-      - run: sh deploy.sh
+      - run: cd client && sh deploy.sh
 workflows:
   version: 2
   build_install_deploy:
