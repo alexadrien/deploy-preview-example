@@ -23,7 +23,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "client/package.json" }}
       - run: cd client
       - run: npm run-script build
       - save_cache:
