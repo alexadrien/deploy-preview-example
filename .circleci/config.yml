@@ -100,6 +100,9 @@ jobs:
           keys:
             - v5-build-{{ .Environment.CIRCLE_SHA1 }}
             - v5-tfstate-{{ .Branch }}-
+      - restore_cache:
+          keys:
+            - v5-tfstate-{{ .Branch }}-
       - run: cd devops/terraform && ls
       - run: cd devops/terraform && export $TEMPORARY_EC2_URL=$(cat ec2_public_dns)
       - run: printenv
