@@ -53,7 +53,7 @@ jobs:
       - run: cd devops/terraform && terraform init
       - run: cd devops/terraform && terraform plan -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
       - run: cd devops/terraform && terraform apply --auto-approve -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
-      - run: cd devops/terraform && terraform output public_dns
+      - run: cd devops/terraform && echo 'export VERY_IMPORTANT=$(terraform output public_dns)' >> $BASH_ENV
       - save_cache:
           paths:
             - devops/terraform/terraform.tfstate
@@ -65,6 +65,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - run: printenv
 workflows:
   version: 2
   build_install_deploy_master:
