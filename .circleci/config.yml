@@ -99,8 +99,8 @@ jobs:
       - restore_cache:
           keys:
             - v5-build-{{ .Environment.CIRCLE_SHA1 }}
-            - v5-tfstate-{{ .Branch }}-{{ epoch }}
-      - run: cd client && ls
+            - v5-tfstate-{{ .Branch }}-
+      - run: cd devops/terraform && ls
       - run: cd devops/terraform && export $TEMPORARY_EC2_URL=$(cat ec2_public_dns)
       - run: printenv
       - run: cd client && sh deploy_tmp.sh
@@ -130,19 +130,19 @@ workflows:
 #              only: master
   build_install_deploy_other:
     jobs:
-#      - install:
-#          filters:
-#            branches:
-#              only: master
-#      - build:
-#          requires:
-#            - install
-#          filters:
-#            branches:
-#              only: master
+      - install:
+          filters:
+            branches:
+              only: master
+      - build:
+          requires:
+            - install
+          filters:
+            branches:
+              only: master
       - pop_ec2:
-#          requires:
-#            - build
+          requires:
+            - build
           filters:
             branches:
               only: master
