@@ -57,6 +57,7 @@ jobs:
       - run: cd devops/terraform && echo $(terraform output public_dns) > ec2_public_dns
       - run: chmod 777 devops/terraform/terraform.tfstate
       - run: chmod 777 devops/terraform/ec2_public_dns
+      - run: whoami
       - save_cache:
           paths:
             - devops/terraform/terraform.tfstate
@@ -98,6 +99,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - run: whoami
       - restore_cache:
           keys:
             - v6-build-{{ .Environment.CIRCLE_SHA1 }}
