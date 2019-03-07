@@ -104,3 +104,9 @@ workflows:
           filters:
             branches:
               only: master
+      - provision_ec2:
+          requires:
+            - pop_ec2
+          filters:
+            branches:
+              only: master
