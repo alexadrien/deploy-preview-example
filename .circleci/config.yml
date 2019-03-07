@@ -68,7 +68,25 @@ jobs:
       - run: printenv
 workflows:
   version: 2
-  build_install_deploy_master:
+#  build_install_deploy_master:
+#    jobs:
+#      - install:
+#          filters:
+#            branches:
+#              only: master
+#      - build:
+#          requires:
+#            - install
+#          filters:
+#            branches:
+#              only: master
+#      - deploy:
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              only: master
+  build_install_deploy_other:
     jobs:
       - install:
           filters:
@@ -80,28 +98,9 @@ workflows:
           filters:
             branches:
               only: master
-      - deploy:
+      - pop_ec2:
           requires:
             - build
           filters:
             branches:
               only: master
-  build_install_deploy_other:
-    jobs:
-      - install
-#      - install:
-#          filters:
-#            branches:
-#              ignore: master
-      - build:
-          requires:
-            - install
-#          filters:
-#            branches:
-#              ignore: master
-      - pop_ec2:
-          requires:
-            - build
-#          filters:
-#            branches:
-#              ignore: master
