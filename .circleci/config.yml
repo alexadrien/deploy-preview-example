@@ -39,6 +39,7 @@ jobs:
       - restore_cache:
           keys:
             - v5-build-{{ .Environment.CIRCLE_SHA1 }}
+      - run: cd client && ls
       - run: cd client && sh deploy.sh
   pop_ec2:
     docker:
