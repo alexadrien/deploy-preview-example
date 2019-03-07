@@ -50,6 +50,7 @@ jobs:
       - restore_cache:
           keys:
             - v6-tfstate-{{ .Branch }}-
+      - run: /usr/sbin/useradd circleci
       - run: cd devops/terraform && terraform init
       - run: cd devops/terraform && terraform plan -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
       - run: cd devops/terraform && terraform apply --auto-approve -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
@@ -57,7 +58,6 @@ jobs:
       - run: cd devops/terraform && echo $(terraform output public_dns) > ec2_public_dns
       - run: chmod 777 devops/terraform/terraform.tfstate
       - run: chmod 777 devops/terraform/ec2_public_dns
-      - run: /usr/sbin/useradd circleci
       - run: chown circleci devops/terraform/terraform.tfstate
       - run: chown circleci devops/terraform/ec2_public_dns
       - run: whoami
