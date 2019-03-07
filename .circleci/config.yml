@@ -110,7 +110,7 @@ jobs:
             - v6-tfstate-{{ .Branch }}-
       - run: cd devops/terraform && ls
       - run: cd devops/terraform && cat ec2_public_dns
-      - run: cd devops/terraform && echo 'export TEMPORARY_EC2_URL=$(cat ec2_public_dns)' >> $BASH_ENV
+      - run: cd devops/terraform && echo 'export TEMPORARY_EC2_URL=$(cat /root/repo/devops/terraform/ec2_public_dns)' >> $BASH_ENV
       - run: cd devops/terraform && echo $TEMPORARY_EC2_URL
       - run: printenv
       - run: cd client && sh deploy_tmp.sh
