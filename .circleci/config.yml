@@ -104,9 +104,6 @@ jobs:
       - run: whoami
       - restore_cache:
           keys:
-            - v7-build-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          keys:
             - v7-tfstate-{{ .Branch }}-
       - run: cd devops/terraform && ls
       - run: cd devops/terraform && cat ec2_public_dns
@@ -114,6 +111,9 @@ jobs:
       - run: cd devops/terraform && echo $TEMPORARY_EC2_URL
       - run: printenv
       - run: ls client
+      - restore_cache:
+          keys:
+            - v7-build-{{ .Environment.CIRCLE_SHA1 }}
       - run: cd client && sh deploy_tmp.sh
   comment_bot:
     docker:
