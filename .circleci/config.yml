@@ -53,10 +53,11 @@ jobs:
       - run: cd devops/terraform && terraform init
       - run: cd devops/terraform && terraform plan -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
       - run: cd devops/terraform && terraform apply --auto-approve -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
-      - run: cd devops/terraform && echo 'export VERY_IMPORTANT=$(terraform output public_dns)' >> $BASH_ENV
+      - run: cd devops/terraform && echo $(terraform output public_dns) > ec2_public_dns
       - save_cache:
           paths:
             - devops/terraform/terraform.tfstate
+            - devops/terraform/ec2_public_dns
           key: v5-tfstate-{{ .Branch }}-{{ epoch }}
   provision_ec2:
     docker:
@@ -64,7 +65,12 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v5-tfstate-{{ .Branch }}-
       - run: printenv
+      - run: ls devops/terraform
+      - run: cat devops/terraform/ec2_public_dns
 workflows:
   version: 2
 #  build_install_deploy_master:
