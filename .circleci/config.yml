@@ -104,14 +104,12 @@ workflows:
             branches:
               only: master
       - pop_ec2:
-          context: my-context
           requires:
             - build
           filters:
             branches:
               only: master
       - provision_ec2:
-          context: my-context
           requires:
             - pop_ec2
           filters:
