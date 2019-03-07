@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 echo $CIRCLE_SHA1
+echo $GITHUB_TOKEN_COMMENTS
 curl -X POST \
   'https://api.github.com/repos/alexadrien/deploy-preview-conf/commits/$CIRCLE_SHA1/comments?access_token=$GITHUB_TOKEN_COMMENTS' \
   -H 'Content-Type: application/json' \
