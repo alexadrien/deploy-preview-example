@@ -2,7 +2,7 @@ resource "aws_instance" "main" {
   ami = "ami-00035f41c82244dab"
   instance_type = "t3.micro"
   key_name = "${aws_key_pair.deployer.key_name}"
-  security_groups = ['${aws_security_group.main}']
+  security_groups = ["${aws_security_group.main}"]
 }
 
 resource "aws_key_pair" "deployer" {
