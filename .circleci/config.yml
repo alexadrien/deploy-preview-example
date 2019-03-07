@@ -49,7 +49,7 @@ jobs:
       - restore_cache:
           keys:
             - v1-build-{{ .Environment.CIRCLE_SHA1 }}
-      - run: ls
+      - run: cd devops/terraform && terraform init
 workflows:
   version: 2
   build_install_deploy_master:
