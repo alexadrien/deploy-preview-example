@@ -3,7 +3,6 @@ resource "aws_instance" "main" {
   instance_type = "t3.micro"
   key_name = "${aws_key_pair.deployer.key_name}"
   security_groups = "deploypreviewsg"
-  depends_on = ["aws_security_group.main"]
 }
 
 resource "aws_key_pair" "deployer" {
