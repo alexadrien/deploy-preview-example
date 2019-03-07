@@ -50,6 +50,7 @@ jobs:
           keys:
             - v1-build-{{ .Environment.CIRCLE_SHA1 }}
       - run: cd devops/terraform && terraform init
+      - run: cd devops/terraform && terraform plan
 workflows:
   version: 2
   build_install_deploy_master:
