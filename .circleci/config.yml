@@ -57,7 +57,7 @@ jobs:
       - run: cd devops/terraform && echo $(terraform output public_dns) > ec2_public_dns
       - run: chmod 777 devops/terraform/terraform.tfstate
       - run: chmod 777 devops/terraform/ec2_public_dns
-      - run: useradd circleci
+      - run: /usr/sbin/useradd circleci
       - run: chown circleci devops/terraform/terraform.tfstate
       - run: chown circleci devops/terraform/ec2_public_dns
       - run: whoami
