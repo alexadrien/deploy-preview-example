@@ -89,7 +89,8 @@ workflows:
 #          filters:
 #            branches:
 #              ignore: master
-      - pop_ec2:
+      - pop_ec2
+#      - pop_ec2:
 #          requires:
 #            - build
 #          filters:
