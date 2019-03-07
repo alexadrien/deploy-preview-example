@@ -73,7 +73,7 @@ jobs:
       - run: echo "$(cat devops/terraform/ec2_public_dns) ansible_ssh_user=ubuntu" >> devops/ansible/tmp_hosts
       - run: cat devops/ansible/tmp_hosts
 #      - run: cd devops/ansible && ansible-playbook -i tmp_hosts playbook.yml
-      - run: cd devops/ansible && ansible-runner --inventory tmp_hosts -p playbook.yml
+      - run: cd devops/ansible && ansible-runner --inventory tmp_hosts -p playbook.yml run /tmp/private
 workflows:
   version: 2
 #  build_install_deploy_master:
