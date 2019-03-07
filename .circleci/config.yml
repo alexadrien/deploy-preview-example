@@ -58,10 +58,6 @@ jobs:
           paths:
             - devops/terraform/terraform.tfstate
           key: v5-tfstate-{{ .Branch }}-{{ epoch }}
-      - save_cache:
-          paths:
-            - devops/terraform/terraform.tfstate
-          key: v5-tfstate-{{ .Branch }}-{{ epoch }}
   provision_ec2:
     docker:
       - image: ansible/ansible:default
