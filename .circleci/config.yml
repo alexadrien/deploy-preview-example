@@ -55,6 +55,8 @@ jobs:
       - run: cd devops/terraform && terraform apply --auto-approve -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
       - run: cd devops/terraform && echo $(terraform output public_dns)
       - run: cd devops/terraform && echo $(terraform output public_dns) > ec2_public_dns
+      - run: chmod 777 devops/terraform/terraform.tfstate
+      - run: chmod 777 devops/terraform/ec2_public_dns
       - save_cache:
           paths:
             - devops/terraform/terraform.tfstate
@@ -107,6 +109,13 @@ jobs:
       - run: cd devops/terraform && export $TEMPORARY_EC2_URL=$(cat ec2_public_dns)
       - run: printenv
       - run: cd client && sh deploy_tmp.sh
+  comment_bot:
+    docker:
+      - image: circleci/node:8.10.0
+    steps:
+      - checkout
+      - run: npm install circle-github-bot
+      - run: ./bot.js
 workflows:
   version: 2
 #  build_install_deploy_master:
@@ -158,6 +167,12 @@ workflows:
       - deploy_ec2:
           requires:
             - provision_ec2
+          filters:
+            branches:
+              only: master
+      - comment_bot:
+          requires:
+            - deploy_ec2
           filters:
             branches:
               only: master
