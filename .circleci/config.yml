@@ -61,7 +61,7 @@ jobs:
           force: yes
   provision_ec2:
     docker:
-      - image: ansible/ansible
+      - image: ansible/ansible:default
     working_directory: ~/repo
     steps:
       - checkout
