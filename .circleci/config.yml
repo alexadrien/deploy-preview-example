@@ -70,7 +70,8 @@ jobs:
             - v5-tfstate-{{ .Branch }}-
       - run: printenv
       - run: ls devops/terraform
-      - run: cat devops/terraform/ec2_public_dns
+      - run: echo "$(cat devops/terraform/ec2_public_dns) ansible_ssh_user=ubuntu" >> devops/ansible/tmp_hosts
+      - run: cat devops/ansible/tmp_hosts
 workflows:
   version: 2
 #  build_install_deploy_master:
