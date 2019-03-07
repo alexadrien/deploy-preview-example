@@ -38,7 +38,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-build-{{ .Environment.CIRCLE_SHA1 }}
+            - v2-build-{{ .Environment.CIRCLE_SHA1 }}
       - run: cd client && sh deploy.sh
   pop_ec2:
     docker:
@@ -55,7 +55,8 @@ jobs:
       - save_cache:
           paths:
             - devops/terraform/terraform.tfstate
-          key: v1-tfstate
+          key: v2-tfstate-{{ .Branch }}
+          force: yes
 workflows:
   version: 2
   build_install_deploy_master:
