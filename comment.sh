@@ -7,6 +7,6 @@ curl -X POST \
   -H 'Postman-Token: 6a8282ec-8e8f-4c0c-8275-82687cb05797' \
   -H 'cache-control: no-cache' \
   -d "{
-  \"body\": \"$TEMPORARY_EC2_URL\"
+  \"body\": \"https://$TEMPORARY_EC2_URL\"
 }
 "
