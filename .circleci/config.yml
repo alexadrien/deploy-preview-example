@@ -152,29 +152,29 @@ workflows:
       - pop_ec2:
           filters:
             branches:
-              only: master
+              ignore: master
       - install:
           filters:
             branches:
-              only: master
+              ignore: master
       - build:
           requires:
             - install
           filters:
             branches:
-              only: master
+              ignore: master
       - provision_ec2:
           requires:
             - build
           filters:
             branches:
-              only: master
+              ignore: master
       - deploy_ec2:
           requires:
             - provision_ec2
           filters:
             branches:
-              only: master
+              ignore: master
 #      - comment_bot:
 #          requires:
 #            - deploy_ec2
