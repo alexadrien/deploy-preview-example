@@ -26,6 +26,7 @@ output "public_dns" {
 
 
 resource "aws_security_group" "main" {
+  name = "ohlala"
   ingress {
     from_port   = 0
     to_port     = 65535
