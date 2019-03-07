@@ -59,6 +59,10 @@ jobs:
             - devops/terraform/terraform.tfstate
             - devops/terraform/ec2_public_dns
           key: v5-tfstate-{{ .Branch }}-{{ epoch }}
+      - save_cache:
+          paths:
+            - devops/terraform/terraform.tfstate
+          key: v5-tfstate-sha1-{{ .Environment.CIRCLE_SHA1 }}
   provision_ec2:
     docker:
       - image: ansible/ansible-runner:latest
