@@ -8,13 +8,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v7-dependencies-{{ checksum "client/package.json" }}
+            - v8-dependencies-{{ checksum "client/package.json" }}
       - run: cd client && npm install
       - run: ls client
       - save_cache:
           paths:
             - "client/node_modules"
-          key: v7-dependencies-{{ checksum "client/package.json" }}
+          key: v8-dependencies-{{ checksum "client/package.json" }}
   build:
     docker:
       - image: circleci/node:7.10
@@ -23,13 +23,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v7-dependencies-{{ checksum "client/package.json" }}
+            - v8-dependencies-{{ checksum "client/package.json" }}
       - run: ls client
       - run: cd client && npm run-script build
       - save_cache:
           paths:
             - client/build
-          key: v7-build-{{ .Environment.CIRCLE_SHA1 }}
+          key: v8-build-{{ .Environment.CIRCLE_SHA1 }}
   deploy:
     docker:
       - image: circleci/python:3.6.4
@@ -38,7 +38,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v7-build-{{ .Environment.CIRCLE_SHA1 }}
+            - v8-build-{{ .Environment.CIRCLE_SHA1 }}
       - run: cd client && ls
       - run: cd client && sh deploy.sh
   pop_ec2:
@@ -49,7 +49,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v7-tfstate-{{ .Branch }}-
+            - v8-tfstate-{{ .Branch }}-
       - run: cd devops/terraform && terraform init
       - run: cd devops/terraform && terraform plan -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
       - run: cd devops/terraform && terraform apply --auto-approve -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
@@ -63,11 +63,11 @@ jobs:
           paths:
             - devops/terraform/terraform.tfstate
             - devops/terraform/ec2_public_dns
-          key: v7-tfstate-{{ .Branch }}-{{ epoch }}
+          key: v8-tfstate-{{ .Branch }}-{{ epoch }}
       - save_cache:
           paths:
             - devops/terraform/terraform.tfstate
-          key: v7-tfstate-sha1-{{ .Environment.CIRCLE_SHA1 }}
+          key: v8-tfstate-sha1-{{ .Environment.CIRCLE_SHA1 }}
   erase_previous_ec2:
     docker:
       - image: hashicorp/terraform:light
@@ -76,7 +76,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v7-tfstate-sha1-{{ .Environment.CIRCLE_SHA1 }}
+            - v8-tfstate-sha1-{{ .Environment.CIRCLE_SHA1 }}
       - run: cd devops/terraform && terraform init
       - run: cd devops/terraform && terraform destroy --auto-approve -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
   provision_ec2:
@@ -87,7 +87,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v7-tfstate-{{ .Branch }}-
+            - v8-tfstate-{{ .Branch }}-
       - run: printenv
       - run: ls devops/terraform
       - run: echo "$(cat devops/terraform/ec2_public_dns) ansible_ssh_user=ubuntu" >> devops/ansible/tmp_hosts
@@ -104,7 +104,7 @@ jobs:
       - run: whoami
       - restore_cache:
           keys:
-            - v7-tfstate-{{ .Branch }}-
+            - v8-tfstate-{{ .Branch }}-
       - run: cd devops/terraform && ls
       - run: cd devops/terraform && cat ec2_public_dns
       - run: cd devops/terraform && echo 'export TEMPORARY_EC2_URL=$(cat /root/repo/devops/terraform/ec2_public_dns)' >> $BASH_ENV
@@ -112,7 +112,7 @@ jobs:
       - run: printenv
       - restore_cache:
           keys:
-            - v7-build-{{ .Environment.CIRCLE_SHA1 }}
+            - v8-build-{{ .Environment.CIRCLE_SHA1 }}
       - run: ls client
       - run: cd client && sh deploy_tmp.sh
   comment_bot:
