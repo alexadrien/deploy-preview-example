@@ -8,13 +8,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v3-dependencies-{{ checksum "client/package.json" }}
+            - v4-dependencies-{{ checksum "client/package.json" }}
       - run: cd client && npm install
       - run: ls client
       - save_cache:
           paths:
             - "client/node_modules"
-          key: v3-dependencies-{{ checksum "client/package.json" }}
+          key: v4-dependencies-{{ checksum "client/package.json" }}
   build:
     docker:
       - image: circleci/node:7.10
@@ -23,7 +23,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v3-dependencies-{{ checksum "client/package.json" }}
+            - v4-dependencies-{{ checksum "client/package.json" }}
       - run: ls client
       - run: cd client && npm run-script build
       - save_cache:
@@ -38,7 +38,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v3-build-{{ .Environment.CIRCLE_SHA1 }}
+            - v4-build-{{ .Environment.CIRCLE_SHA1 }}
       - run: cd client && sh deploy.sh
   pop_ec2:
     docker:
@@ -48,14 +48,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v3-tfstate-{{ .Branch }}-{{ epoch }}
+            - v4-tfstate-{{ .Branch }}-
       - run: cd devops/terraform && terraform init
       - run: cd devops/terraform && terraform plan -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
       - run: cd devops/terraform && terraform apply --auto-approve -var="aws_access_key=$AWS_ACCESS_KEY_ID" -var="aws_secret_key=$AWS_SECRET_ACCESS_KEY"
       - save_cache:
           paths:
             - devops/terraform/terraform.tfstate
-          key: v3-tfstate-{{ .Branch }}-{{ epoch }}
+          key: v4-tfstate-{{ .Branch }}-{{ epoch }}
           force: yes
 workflows:
   version: 2
