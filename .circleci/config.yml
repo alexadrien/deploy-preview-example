@@ -40,9 +40,19 @@ jobs:
           keys:
             - v1-build-{{ .Environment.CIRCLE_SHA1 }}
       - run: cd client && sh deploy.sh
+  pop_ec2:
+    docker:
+      - image: hashicorp/terraform:light
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-build-{{ .Environment.CIRCLE_SHA1 }}
+      - run: ls
 workflows:
   version: 2
-  build_install_deploy:
+  build_install_deploy_master:
     jobs:
       - install
       - build:
@@ -54,3 +64,15 @@ workflows:
           filters:
             branches:
               only: master
+  build_install_deploy_other:
+    jobs:
+#      - install
+#      - build:
+#          requires:
+#            - install
+      - deploy_temp:
+#          requires:
+#            - build
+          filters:
+            branches:
+              ignore: master
