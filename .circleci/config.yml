@@ -113,6 +113,7 @@ jobs:
       - run: cd devops/terraform && echo 'export TEMPORARY_EC2_URL=$(cat /root/repo/devops/terraform/ec2_public_dns)' >> $BASH_ENV
       - run: cd devops/terraform && echo $TEMPORARY_EC2_URL
       - run: printenv
+      - run: ls client
       - run: cd client && sh deploy_tmp.sh
   comment_bot:
     docker:
