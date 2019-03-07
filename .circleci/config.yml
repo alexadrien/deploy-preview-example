@@ -144,7 +144,13 @@ workflows:
 #              only: master
   build_install_deploy_other:
     jobs:
+      - pop_ec2:
+          filters:
+            branches:
+              only: master
       - install:
+          requires:
+            - pop_ec2
           filters:
             branches:
               only: master
@@ -154,15 +160,9 @@ workflows:
           filters:
             branches:
               only: master
-      - pop_ec2:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
       - provision_ec2:
           requires:
-            - pop_ec2
+            - build
           filters:
             branches:
               only: master
