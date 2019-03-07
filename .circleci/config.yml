@@ -55,7 +55,7 @@ jobs:
       - save_cache:
           paths:
             - devops/terraform/terraform.tfstate
-          key: v3-tfstate-{{ .Branch }}
+          key: v3-tfstate-{{ .Branch }}-{{ epoch }}
           force: yes
 workflows:
   version: 2
