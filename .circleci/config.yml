@@ -58,7 +58,10 @@ jobs:
           paths:
             - devops/terraform/terraform.tfstate
           key: v5-tfstate-{{ .Branch }}-{{ epoch }}
-          force: yes
+      - save_cache:
+          paths:
+            - devops/terraform/terraform.tfstate
+          key: v5-tfstate-{{ .Branch }}-{{ epoch }}
   provision_ec2:
     docker:
       - image: ansible/ansible:default
@@ -99,12 +102,14 @@ workflows:
             branches:
               only: master
       - pop_ec2:
+          context: my-context
           requires:
             - build
           filters:
             branches:
               only: master
       - provision_ec2:
+          context: my-context
           requires:
             - pop_ec2
           filters:
