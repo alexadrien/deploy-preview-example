@@ -25,7 +25,6 @@ output "public_dns" {
   value = "${aws_instance.main.public_dns}"
 }
 
-
 resource "aws_security_group" "main" {
   name = "ohlala"
   ingress {
