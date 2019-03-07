@@ -121,6 +121,7 @@ jobs:
     steps:
       - checkout
       - run: npm install circle-github-bot
+      - run: ls -la
       - run: ./bot.js
 workflows:
   version: 2
@@ -148,35 +149,35 @@ workflows:
 #              only: master
   build_install_deploy_other:
     jobs:
-      - pop_ec2:
-          filters:
-            branches:
-              only: master
-      - install:
-          filters:
-            branches:
-              only: master
-      - build:
-          requires:
-            - install
-          filters:
-            branches:
-              only: master
-      - provision_ec2:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
-      - deploy_ec2:
-          requires:
-            - provision_ec2
-          filters:
-            branches:
-              only: master
+#      - pop_ec2:
+#          filters:
+#            branches:
+#              only: master
+#      - install:
+#          filters:
+#            branches:
+#              only: master
+#      - build:
+#          requires:
+#            - install
+#          filters:
+#            branches:
+#              only: master
+#      - provision_ec2:
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              only: master
+#      - deploy_ec2:
+#          requires:
+#            - provision_ec2
+#          filters:
+#            branches:
+#              only: master
       - comment_bot:
-          requires:
-            - deploy_ec2
+#          requires:
+#            - deploy_ec2
           filters:
             branches:
               only: master
