@@ -61,7 +61,7 @@ jobs:
           key: v5-tfstate-{{ .Branch }}-{{ epoch }}
   provision_ec2:
     docker:
-      - image: walokra/ansible-runner:latest
+      - image: ansible/ansible-runner:latest
     working_directory: ~/repo
     steps:
       - checkout
@@ -72,7 +72,8 @@ jobs:
       - run: ls devops/terraform
       - run: echo "$(cat devops/terraform/ec2_public_dns) ansible_ssh_user=ubuntu" >> devops/ansible/tmp_hosts
       - run: cat devops/ansible/tmp_hosts
-      - run: cd devops/ansible && ansible-playbook -i tmp_hosts playbook.yml
+#      - run: cd devops/ansible && ansible-playbook -i tmp_hosts playbook.yml
+      - run: cd devops/ansible && ansible-runner --playbook playbook.yml -i tmp_hosts
 workflows:
   version: 2
 #  build_install_deploy_master:
