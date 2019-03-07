@@ -178,4 +178,4 @@ workflows:
 #            - deploy_ec2
           filters:
             branches:
-              only: master
+              ignore: master
