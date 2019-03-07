@@ -118,8 +118,13 @@ jobs:
   comment_bot:
     docker:
       - image: circleci/node:8.10.0
+        user: root
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v10-tfstate-{{ .Branch }}-
+      - run: cd devops/terraform && echo 'export TEMPORARY_EC2_URL=$(cat /root/repo/devops/terraform/ec2_public_dns)' >> $BASH_ENV
       - run: sh comment.sh
 workflows:
   version: 2
@@ -173,9 +178,9 @@ workflows:
           filters:
             branches:
               ignore: master
-#      - comment_bot:
-#          requires:
-#            - deploy_ec2
-#          filters:
-#            branches:
-#              only: master
+      - comment_bot:
+          requires:
+            - deploy_ec2
+          filters:
+            branches:
+              ignore: master
