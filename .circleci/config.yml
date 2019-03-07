@@ -150,8 +150,6 @@ workflows:
             branches:
               only: master
       - install:
-          requires:
-            - pop_ec2
           filters:
             branches:
               only: master
