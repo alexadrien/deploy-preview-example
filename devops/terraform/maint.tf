@@ -23,3 +23,11 @@ provider "aws" {
 output "public_dns" {
   value = "${aws_instance.main.public_dns}"
 }
+
+resource "aws_security_group" "allow_tcp" {
+  ingress {
+    from_port   = 0
+    to_port     = 65535
+    protocol    = "TCP"
+  }
+}
