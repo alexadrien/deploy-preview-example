@@ -2,7 +2,7 @@ resource "aws_instance" "main" {
   ami = "ami-00035f41c82244dab"
   instance_type = "t3.micro"
   key_name = "${aws_key_pair.deployer.key_name}"
-  security_groups = ["${aws_security_group.main.arn}"]
+  security_groups = "deploypreviewsg"
   depends_on = ["aws_security_group.main"]
 }
 
@@ -23,13 +23,4 @@ provider "aws" {
 
 output "public_dns" {
   value = "${aws_instance.main.public_dns}"
-}
-
-resource "aws_security_group" "main" {
-  name = "ohlala"
-  ingress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "TCP"
-  }
 }
