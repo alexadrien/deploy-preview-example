@@ -125,59 +125,59 @@ jobs:
       - run: ./bot.js
 workflows:
   version: 2
-#  build_install_deploy_master:
-#    jobs:
-#      - erase_previous_ec2:
-#          filters:
-#            branches:
-#              only: master
-#      - install:
-#          filters:
-#            branches:
-#              only: master
-#      - build:
-#          requires:
-#            - install
-#          filters:
-#            branches:
-#              only: master
-#      - deploy:
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only: master
-  build_install_deploy_other:
+  build_install_deploy_master:
     jobs:
-#      - pop_ec2:
-#          filters:
-#            branches:
-#              only: master
-#      - install:
-#          filters:
-#            branches:
-#              only: master
-#      - build:
-#          requires:
-#            - install
-#          filters:
-#            branches:
-#              only: master
-#      - provision_ec2:
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only: master
-#      - deploy_ec2:
-#          requires:
-#            - provision_ec2
-#          filters:
-#            branches:
-#              only: master
-      - comment_bot:
-#          requires:
-#            - deploy_ec2
+      - erase_previous_ec2:
           filters:
             branches:
               only: master
+      - install:
+          filters:
+            branches:
+              only: master
+      - build:
+          requires:
+            - install
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+  build_install_deploy_other:
+    jobs:
+      - pop_ec2:
+          filters:
+            branches:
+              only: master
+      - install:
+          filters:
+            branches:
+              only: master
+      - build:
+          requires:
+            - install
+          filters:
+            branches:
+              only: master
+      - provision_ec2:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - deploy_ec2:
+          requires:
+            - provision_ec2
+          filters:
+            branches:
+              only: master
+#      - comment_bot:
+#          requires:
+#            - deploy_ec2
+#          filters:
+#            branches:
+#              only: master
