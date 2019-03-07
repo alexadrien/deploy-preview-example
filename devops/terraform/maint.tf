@@ -2,7 +2,7 @@ resource "aws_instance" "main" {
   ami = "ami-00035f41c82244dab"
   instance_type = "t3.micro"
   key_name = "${aws_key_pair.deployer.key_name}"
-//  key_name = "deploy-preview-key"
+  security_groups = ['${aws_security_group.main}']
 }
 
 resource "aws_key_pair" "deployer" {
@@ -24,7 +24,7 @@ output "public_dns" {
   value = "${aws_instance.main.public_dns}"
 }
 
-resource "aws_security_group" "allow_tcp" {
+resource "aws_security_group" "main" {
   ingress {
     from_port   = 0
     to_port     = 65535
