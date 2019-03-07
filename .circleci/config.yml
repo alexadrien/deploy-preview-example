@@ -147,35 +147,35 @@ workflows:
               only: master
   build_install_deploy_other:
     jobs:
-      - pop_ec2:
-          filters:
-            branches:
-              ignore: master
-      - install:
-          filters:
-            branches:
-              ignore: master
-      - build:
-          requires:
-            - install
-          filters:
-            branches:
-              ignore: master
-      - provision_ec2:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: master
-      - deploy_ec2:
-          requires:
-            - provision_ec2
-          filters:
-            branches:
-              ignore: master
-#      - comment_bot:
-#          requires:
-#            - deploy_ec2
+#      - pop_ec2:
 #          filters:
 #            branches:
-#              only: master
+#              ignore: master
+#      - install:
+#          filters:
+#            branches:
+#              ignore: master
+#      - build:
+#          requires:
+#            - install
+#          filters:
+#            branches:
+#              ignore: master
+#      - provision_ec2:
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              ignore: master
+#      - deploy_ec2:
+#          requires:
+#            - provision_ec2
+#          filters:
+#            branches:
+#              ignore: master
+      - comment_bot:
+#          requires:
+#            - deploy_ec2
+          filters:
+            branches:
+              only: master
