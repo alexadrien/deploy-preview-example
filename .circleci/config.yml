@@ -109,6 +109,7 @@ jobs:
           keys:
             - v6-tfstate-{{ .Branch }}-
       - run: cd devops/terraform && ls
+      - run: cd devops/terraform && cat ec2_public_dns
       - run: cd devops/terraform && export TEMPORARY_EC2_URL=$(cat ec2_public_dns)
       - run: printenv
       - run: cd client && sh deploy_tmp.sh
@@ -145,29 +146,29 @@ workflows:
 #              only: master
   build_install_deploy_other:
     jobs:
-      - pop_ec2:
-          filters:
-            branches:
-              only: master
-      - install:
-          filters:
-            branches:
-              only: master
-      - build:
-          requires:
-            - install
-          filters:
-            branches:
-              only: master
-      - provision_ec2:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+#      - pop_ec2:
+#          filters:
+#            branches:
+#              only: master
+#      - install:
+#          filters:
+#            branches:
+#              only: master
+#      - build:
+#          requires:
+#            - install
+#          filters:
+#            branches:
+#              only: master
+#      - provision_ec2:
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              only: master
       - deploy_ec2:
-          requires:
-            - provision_ec2
+#          requires:
+#            - provision_ec2
           filters:
             branches:
               only: master
