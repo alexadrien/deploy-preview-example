@@ -61,7 +61,7 @@ jobs:
           key: v5-tfstate-{{ .Branch }}-{{ epoch }}
   provision_ec2:
     docker:
-      - image: ansible/ansible:default
+      - image: walokra/ansible-playbook:latest
     working_directory: ~/repo
     steps:
       - checkout
