@@ -11,6 +11,7 @@ resource "aws_key_pair" "deployer" {
 }
 
 variable "aws_access_key" {}
+
 variable "aws_secret_key" {}
 
 provider "aws" {
