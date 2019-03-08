@@ -181,7 +181,7 @@ workflows:
               ignore: master
       - comment_bot:
           requires:
-            - pop_ec2
+            - deploy_ec2
           filters:
             branches:
               ignore: master
