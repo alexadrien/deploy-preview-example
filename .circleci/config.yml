@@ -168,12 +168,13 @@ workflows:
               ignore: master
       - provision_ec2:
           requires:
-            - build
+            - pop_ec2
           filters:
             branches:
               ignore: master
       - deploy_ec2:
           requires:
+            - build
             - provision_ec2
           filters:
             branches:
