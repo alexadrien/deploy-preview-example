@@ -1,4 +1,4 @@
-# deploy-preview-conf
+# deploy-preview-example
 Deploy Preview example
 
 App : 
