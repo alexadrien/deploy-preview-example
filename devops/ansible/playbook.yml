@@ -1,0 +1,20 @@
+---
+
+- name: Provisioning
+  hosts: all
+  become: true
+  roles:
+    - ansible-role-nginx-master
+
+  pre_tasks:
+    - name: Update apt
+      become: yes
+      apt:
+        cache_valid_time: 1800
+        update_cache: yes
+
+  tasks:
+    - file:
+        path: /var/www/html
+        owner: ubuntu
+        group: ubuntu
