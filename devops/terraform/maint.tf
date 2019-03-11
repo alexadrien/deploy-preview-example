@@ -4,15 +4,19 @@ resource "aws_instance" "main" {
   key_name = "${aws_key_pair.deployer.key_name}"
   security_groups = ["deploypreviewsg"]
 
-  provisioner "remote-exec" {
-    inline = ["sleep 10"]
-    connection {
-      user = "ubuntu"
-      private_key = "${file("../ssh/deploy-preview.pem")}"
-      type = "ssh"
-      agent = "false"
-    }
+  provisioner "local-exec" {
+    command = "ls"
   }
+
+//  provisioner "remote-exec" {
+//    inline = ["sleep 10"]
+//    connection {
+//      user = "ubuntu"
+//      private_key = "${file("../ssh/deploy-preview.pem")}"
+//      type = "ssh"
+//      agent = "false"
+//    }
+//  }
 }
 
 resource "aws_key_pair" "deployer" {
