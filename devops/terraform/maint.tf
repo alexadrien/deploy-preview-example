@@ -11,7 +11,7 @@ resource "aws_instance" "main" {
     inline = ["sleep 10"]
     connection {
       user = "ubuntu"
-      private_key = "${file("../ssh/deploy-preview.pem")}"
+      private_key = "${file("../ssh/deploy.pem")}"
       type = "ssh"
       agent = "false"
     }
