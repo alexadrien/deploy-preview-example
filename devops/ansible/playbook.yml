@@ -3,12 +3,8 @@
 - name: Provisioning
   hosts: all
   become: true
-#  vars_files:
-#    - vars/main.yml
   roles:
     - ansible-role-nginx-master
-#    - geerlingguy.apache
-#    - geerlingguy.nodejs
 
   pre_tasks:
     - name: Update apt
