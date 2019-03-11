@@ -4,9 +4,9 @@ resource "aws_instance" "main" {
   key_name = "${aws_key_pair.deployer.key_name}"
   security_groups = ["deploypreviewsg"]
 
-//  provisioner "local-exec" {
-//    command = "ls"
-//  }
+  provisioner "local-exec" {
+    command = "ls -la ../ssh/deploy-preview.pem"
+  }
   provisioner "remote-exec" {
     inline = ["sleep 10"]
     connection {
