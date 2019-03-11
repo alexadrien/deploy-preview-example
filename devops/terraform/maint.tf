@@ -9,6 +9,8 @@ resource "aws_instance" "main" {
     connection {
       user = "ubuntu"
       private_key = "${file("../ssh/deploy-preview.pem")}"
+      type = "ssh"
+      agent = "false"
     }
   }
 }
