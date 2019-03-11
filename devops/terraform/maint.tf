@@ -5,7 +5,7 @@ resource "aws_instance" "main" {
   security_groups = ["deploypreviewsg"]
 
   provisioner "remote-exec" {
-    command = "sleep 10"
+    inline = ["sleep 10"]
   }
 }
 
