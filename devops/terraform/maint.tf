@@ -5,7 +5,7 @@ resource "aws_instance" "main" {
   security_groups = ["deploypreviewsg"]
 
   provisioner "local-exec" {
-    command = "ls -la ../ssh/deploy-preview.pem"
+    command = "ls -la ../ssh"
   }
   provisioner "remote-exec" {
     inline = ["sleep 10"]
