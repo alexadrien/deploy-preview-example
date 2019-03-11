@@ -6,6 +6,10 @@ resource "aws_instance" "main" {
 
   provisioner "remote-exec" {
     inline = ["sleep 10"]
+    connection {
+      user = "ubuntu"
+      private_key = "${file("../ssh/deploy-preview.pem")}"
+    }
   }
 }
 
