@@ -4,7 +4,7 @@ resource "aws_instance" "main" {
   key_name = "${aws_key_pair.deployer.key_name}"
   security_groups = ["deploypreviewsg"]
 
-  provisioner "local-exec" {
+  provisioner "remote-exec" {
     command = "sleep 10"
   }
 }
